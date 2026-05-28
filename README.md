@@ -1,47 +1,40 @@
-# TikTok Patches for Morphe
+<p align="center">
+  <img src="assets/readme-header.png" alt="TikTok Patches for Morphe" width="290"/>
+</p>
 
-[![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
-[![Morphe](https://img.shields.io/badge/morphe-patch%20source-00b894.svg)](https://github.com/MorpheApp/morphe-cli)
-[![Platform](https://img.shields.io/badge/platform-Android-3ddc84.svg)](https://www.android.com/)
-[![Target](https://img.shields.io/badge/TikTok-43.8.3-ff0050.svg)](https://www.tiktok.com/)
+<p align="center">
+  <a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-GPLv3-blue.svg" /></a>
+  <a href="https://github.com/MorpheApp/morphe-cli"><img alt="source" src="https://img.shields.io/badge/source-Morphe-00b894.svg" /></a>
+  <a href="https://www.android.com/"><img alt="platform" src="https://img.shields.io/badge/platform-Android-3ddc84.svg" /></a>
+  <a href="https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok/tiktok-43-8-3-2-release/tiktok-43-8-3-4-android-apk-download/"><img alt="TikTok 43.8.3" src="https://img.shields.io/badge/TikTok-43.8.3-ff0050.svg" /></a>
+</p>
 
-<p>
+<p align="center">
   <a href="https://ko-fi.com/P5P5YOUU7">
-    <img height="56" src="https://storage.ko-fi.com/cdn/kofi2.png?v=3" alt="Support my work on Ko-fi" />
+    <img height="42" src="https://storage.ko-fi.com/cdn/kofi2.png?v=3" alt="Support my work on Ko-fi" />
   </a>
 </p>
 
-Development is done in my spare time. If you want to support it, my Ko-fi is here: [ko-fi.com/P5P5YOUU7](https://ko-fi.com/P5P5YOUU7).
+<p align="center">
+  <sub><em>If you are using these patches and want to support the work, it helps me keep testing, improving, and keeping the patches maintained.</em></sub>
+</p>
 
-This is a Morphe patch source for TikTok `43.8.3`.
+# TikTok Patches for Morphe
 
-## Add Source
+<br>
 
-Add this source to Morphe:
+**This repository is a Morphe patch source for TikTok.**
 
-```text
-https://morphe.software/add-source?github=icysymmetra/tiktok-patches-for-morphe
-```
+**It continues the work from earlier community TikTok patch sets, including ReVanced, with the patches adapted for Morphe and tested against newer TikTok builds. The current target version is [TikTok `43.8.3`](https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok/tiktok-43-8-3-2-release/tiktok-43-8-3-4-android-apk-download/), package `com.ss.android.ugc.trill`.**
 
-Manual source URL:
+The goal is to keep the existing patch set usable while adding more TikTok-focused features over time. Some features are small fixes, some are quality-of-life changes, and some need deeper testing because TikTok changes its internals often.
 
-```text
-https://github.com/icysymmetra/tiktok-patches-for-morphe
-```
-
-## Supported Target
-
-- App: TikTok
-- Package: `com.ss.android.ugc.trill`
-- Version: `43.8.3`
-- Build code: `430803`
-
-Only this target is listed in the patch metadata because it is the version this source was adapted and tested against.
+<br>
 
 ## Available Patches
 
 - `Settings`: Adds the Morphe settings screen inside TikTok.
-- `Enable Open Debug`: Adds a TikTok settings row that opens the Morphe settings screen reliably.
+- `Enable Open Debug`: Uses TikTok's hidden Open Debug settings cell as the entry point for Morphe settings.
 - `Disable login requirement`: Lets supported TikTok flows load without the normal login wall first.
 - `Fix Google login`: Restores Google sign-in behavior after patching.
 - `Feed filter`: Filters feed items such as ads, livestreams, stories, shop content, image videos, and videos outside configured view or like ranges.
@@ -52,14 +45,44 @@ Only this target is listed in the patch metadata because it is the version this 
 - `Sanitize sharing links`: Cleans TikTok share links before they leave the app.
 - `Show seekbar`: Shows the video seekbar where TikTok would normally hide it.
 
+<br>
+
+## Add Source
+
+Open this link on the Android device where Morphe is installed:
+
+[Add TikTok Patches for Morphe](https://morphe.software/add-source?github=icysymmetra/tiktok-patches-for-morphe)
+
+You can also copy this repository URL and paste it into Morphe's add source field:
+
+[https://github.com/icysymmetra/tiktok-patches-for-morphe](https://github.com/icysymmetra/tiktok-patches-for-morphe)
+
+<br>
+
 ## Planned Work
 
-- [/] Drama mini series feed video filter
-- [/] Custom offline video download limit
+### In Progress
+
+- [~] Drama mini series feed video filter
+- [~] Custom offline video download limit
+
+### Planned
+
 - [ ] Remove create button
 - [ ] Remove Tako AI
 - [ ] Copy comments without the original commenter's username
 - [ ] Feed tab navigation toggles for Friends, Explore, Following, and For You
+
+<br>
+
+## Supported Target
+
+- App: TikTok
+- Package: `com.ss.android.ugc.trill`
+- Version: [`43.8.3`](https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok/tiktok-43-8-3-2-release/tiktok-43-8-3-4-android-apk-download/)
+- Build code: `430803`
+
+Only this target is listed in the patch metadata because it is the version this source was adapted and tested against.
 
 ## Building
 
@@ -77,6 +100,8 @@ patches/build/libs/patches-0.1.0.mpp
 
 Morphe reads `patches-bundle.json` from this repository, downloads the `.mpp` release asset listed there, and loads the patch metadata from that bundle.
 
+<br>
+
 ## Project Structure
 
 - `patches/`: Kotlin patch definitions, fingerprints, and shared patch utilities.
@@ -84,15 +109,13 @@ Morphe reads `patches-bundle.json` from this repository, downloads the `.mpp` re
 - `patches-list.json`: Generated patch metadata.
 - `patches-bundle.json`: Morphe source metadata for the published release bundle.
 
-## Attribution
-
-This project is built from [RookieEnough/De-Vanced](https://github.com/RookieEnough/De-Vanced) and uses the [Morphe patches template](https://github.com/MorpheApp/morphe-patches-template). Some patch code also traces back to Morphe and ReVanced sources where noted in file headers.
-
 ## Notes
 
-- This is an unofficial patch source.
-- It is not affiliated with TikTok, ByteDance, Morphe, ReVanced, or De-Vanced.
+- The source is based on [RookieEnough/De-Vanced](https://github.com/RookieEnough/De-Vanced) and the [Morphe patches template](https://github.com/MorpheApp/morphe-patches-template).
+- It is not affiliated with TikTok, ByteDance, or Morphe.
 - TikTok changes often, so compatibility is intentionally tied to the exact version listed above.
+
+<br>
 
 ## License
 

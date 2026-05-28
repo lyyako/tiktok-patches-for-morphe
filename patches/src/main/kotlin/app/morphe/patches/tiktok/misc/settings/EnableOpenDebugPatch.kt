@@ -45,7 +45,7 @@ private data class OpenDebugTargets(
 @Suppress("unused")
 val enableOpenDebugPatch = bytecodePatch(
     name = "Enable Open Debug",
-    description = "Re-enables the hidden \"Open debug\" entry and uses it for Morphe settings. Supports TikTok 43.8.3.",
+    description = "Uses TikTok's hidden Open Debug settings cell as the entry point for Morphe settings. Supports TikTok 43.8.3.",
     default = true,
 ) {
     dependsOn(sharedExtensionPatch)
