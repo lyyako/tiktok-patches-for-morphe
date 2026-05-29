@@ -18,7 +18,6 @@ import app.morphe.patches.tiktok.misc.extension.sharedExtensionPatch
 import app.morphe.util.findMutableMethodOf
 import app.morphe.util.getReference
 import app.morphe.util.indexOfFirstInstructionOrThrow
-import app.morphe.util.indexOfFirstInstructionReversedOrThrow
 import com.android.tools.smali.dexlib2.iface.ClassDef
 import com.android.tools.smali.dexlib2.iface.Method as SmaliMethod
 import com.android.tools.smali.dexlib2.Opcode
@@ -254,12 +253,15 @@ val enableOpenDebugPatch = bytecodePatch(
 
         fun addOpenDebugToVisibleSettingsList(): Boolean {
             val composeRowsMethod = SettingsComposeRowsFingerprint.methodOrNull ?: return false
-            val sortedListIndex = composeRowsMethod.indexOfFirstInstructionReversedOrThrow {
-                opcode == Opcode.INVOKE_STATIC &&
-                    getReference<MethodReference>()?.toString() ==
+            val sortedListIndex = composeRowsMethod.implementation?.instructions?.indexOfLast {
+                it.opcode == Opcode.INVOKE_STATIC &&
+                    (it as? ReferenceInstruction)?.reference?.toString() ==
                     "LX/0vnC;->LJLJLLL(Ljava/util/Comparator;Ljava/lang/Iterable;)Ljava/util/List;"
-            }
-            val listRegister = composeRowsMethod.getInstruction<OneRegisterInstruction>(sortedListIndex + 1).registerA
+            } ?: -1
+            if (sortedListIndex < 0) return false
+
+            val listRegister = (composeRowsMethod.getInstruction(sortedListIndex + 1) as? OneRegisterInstruction)
+                ?.registerA ?: return false
 
             composeRowsMethod.addInstructions(
                 sortedListIndex + 2,
