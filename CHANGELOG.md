@@ -1,3 +1,17 @@
+## [0.1.5-dev.1](https://github.com/icysymmetra/tiktok-patches-for-morphe/compare/v0.1.4...v0.1.5-dev.1) (2026-05-31)
+
+
+### Bug Fixes
+
+* limit TikTok compatibility to global package ([49806ad](https://github.com/icysymmetra/tiktok-patches-for-morphe/commit/49806ad5a1c75bc2d7f052abf227b7d055879935))
+* sanitize TikTok sharing links before shortening ([53a3558](https://github.com/icysymmetra/tiktok-patches-for-morphe/commit/53a3558f7e1921ccd2636fe2d322a4b7c1ca3d04))
+
+
+
+
+
+## 0.1.5-dev.1
+
 ## [0.1.4](https://github.com/icysymmetra/tiktok-patches-for-morphe/compare/v0.1.3...v0.1.4) (2026-05-30)
 
 
