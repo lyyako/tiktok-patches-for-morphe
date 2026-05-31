@@ -25,7 +25,7 @@
 
 **This repository is a Morphe patch source for TikTok.**
 
-**It continues the work from earlier community TikTok patch sets, including ReVanced, with the patches adapted for Morphe and tested against newer TikTok builds. The current target version is [TikTok `43.8.3`](https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok/tiktok-43-8-3-2-release/tiktok-43-8-3-4-android-apk-download/), with metadata support for both `com.zhiliaoapp.musically` and `com.ss.android.ugc.trill`.**
+**It continues the work from earlier community TikTok patch sets, including ReVanced, with the patches adapted for Morphe and tested against newer TikTok builds. The current target is the global TikTok package, `com.zhiliaoapp.musically`, on [TikTok `43.8.3`](https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok/tiktok-43-8-3-2-release/tiktok-43-8-3-4-android-apk-download/).**
 
 The goal is to keep the existing patch set usable while adding more TikTok-focused features over time. Some features are small fixes, some are quality-of-life changes, and some need deeper testing because TikTok changes its internals often.
 
@@ -79,11 +79,9 @@ You can also copy this repository URL and paste it into Morphe's add source fiel
 
 - App: TikTok
 - Version: [`43.8.3`](https://www.apkmirror.com/apk/tiktok-pte-ltd/tik-tok/tiktok-43-8-3-2-release/tiktok-43-8-3-4-android-apk-download/)
-- Build code: `430803`
-- Global package: `com.zhiliaoapp.musically`
-- JP package: `com.ss.android.ugc.trill`
+- Package: `com.zhiliaoapp.musically`
 
-The local APK used while adapting and testing this source was `com.ss.android.ugc.trill` `43.8.3`. The patch metadata also declares `com.zhiliaoapp.musically` `43.8.3` because that is the common global TikTok package.
+Only the global package is declared in Morphe compatibility metadata. The JP package may share some internals, but it is not advertised as supported unless it gets its own proof pass again.
 
 ## Building
 
