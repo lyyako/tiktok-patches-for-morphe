@@ -1,3 +1,28 @@
+# [0.2.0-dev.1](https://github.com/icysymmetra/tiktok-patches-for-morphe/compare/v0.1.5-dev.1...v0.2.0-dev.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* improve settings menu dark mode layout ([2aa837b](https://github.com/icysymmetra/tiktok-patches-for-morphe/commit/2aa837b165e16c3bf435b385f15160c0ad6c41d1))
+* reduce repeated feed filter scans ([d161ef2](https://github.com/icysymmetra/tiktok-patches-for-morphe/commit/d161ef20c8d9648fb4e48d84655f062c9be99813))
+* restore downloads fallback for restricted videos ([32cfafe](https://github.com/icysymmetra/tiktok-patches-for-morphe/commit/32cfafeaf10ad1bcf87d72a38927977f76000ec5))
+
+
+### Features
+
+* add SIM spoof country presets ([bb73b3d](https://github.com/icysymmetra/tiktok-patches-for-morphe/commit/bb73b3dfebdcbbf9f612a7716e408a8928b56568))
+
+
+### Performance Improvements
+
+* reduce feed filter scanning overhead ([ac13277](https://github.com/icysymmetra/tiktok-patches-for-morphe/commit/ac13277743e2c5f4022a4e1bafea1caf067520fe))
+
+
+
+
+
+## 0.2.0-dev.1
+
 ## [0.1.5-dev.1](https://github.com/icysymmetra/tiktok-patches-for-morphe/compare/v0.1.4...v0.1.5-dev.1) (2026-05-31)
 
 
