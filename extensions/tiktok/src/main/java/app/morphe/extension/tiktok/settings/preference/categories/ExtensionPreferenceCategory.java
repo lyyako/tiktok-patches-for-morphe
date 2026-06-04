@@ -7,10 +7,12 @@ package app.morphe.extension.tiktok.settings.preference.categories;
 
 import android.content.Context;
 import android.preference.PreferenceScreen;
+import android.view.View;
 
 import app.morphe.extension.shared.settings.BaseSettings;
 import app.morphe.extension.shared.settings.preference.ClearLogBufferPreference;
 import app.morphe.extension.shared.settings.preference.ExportLogToClipboardPreference;
+import app.morphe.extension.tiktok.Utils;
 import app.morphe.extension.tiktok.settings.preference.MorpheTikTokAboutPreference;
 import app.morphe.extension.tiktok.settings.preference.TogglePreference;
 
@@ -44,15 +46,39 @@ public class ExtensionPreferenceCategory extends ConditionalPreferenceCategory {
                 BaseSettings.DEBUG
         ));
 
-        var exportLogs = new ExportLogToClipboardPreference(context);
+        var exportLogs = new TintedExportLogToClipboardPreference(context);
         exportLogs.setTitle("Export debug logs");
         exportLogs.setSummary("Copy Morphe debug logs to clipboard.");
         addPreference(exportLogs);
 
-        var clearLogs = new ClearLogBufferPreference(context);
+        var clearLogs = new TintedClearLogBufferPreference(context);
         clearLogs.setTitle("Clear debug logs");
         clearLogs.setSummary("Clear stored Morphe debug logs.");
         addPreference(clearLogs);
+    }
+
+    private static class TintedExportLogToClipboardPreference extends ExportLogToClipboardPreference {
+        TintedExportLogToClipboardPreference(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onBindView(View view) {
+            super.onBindView(view);
+            Utils.setTitleAndSummaryColor(view);
+        }
+    }
+
+    private static class TintedClearLogBufferPreference extends ClearLogBufferPreference {
+        TintedClearLogBufferPreference(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onBindView(View view) {
+            super.onBindView(view);
+            Utils.setTitleAndSummaryColor(view);
+        }
     }
 }
 

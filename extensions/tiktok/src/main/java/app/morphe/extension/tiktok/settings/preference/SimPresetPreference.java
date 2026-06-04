@@ -3,13 +3,17 @@ package app.morphe.extension.tiktok.settings.preference;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.preference.Preference;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +31,12 @@ import app.morphe.extension.tiktok.spoof.sim.SimPresets;
 
 @SuppressWarnings("deprecation")
 public class SimPresetPreference extends Preference {
+    private static final int DIALOG_DARK_MODE_BACKGROUND = Color.argb(255, 18, 18, 18);
+    private static final int DIALOG_DARK_MODE_DIVIDER = Color.argb(255, 48, 48, 48);
+    private static final int DIALOG_DARK_MODE_BORDER = Color.argb(255, 58, 58, 58);
+    private static final int DIALOG_LIGHT_MODE_BACKGROUND = Color.WHITE;
+    private static final int DIALOG_LIGHT_MODE_DIVIDER = Color.argb(255, 224, 224, 224);
+    private static final int DIALOG_LIGHT_MODE_BORDER = Color.argb(255, 210, 210, 210);
     private static final int TEXT_DARK_MODE_TITLE = Color.WHITE;
     private static final int TEXT_DARK_MODE_SUMMARY = Color.argb(255, 170, 170, 170);
     private static final int TEXT_LIGHT_MODE_TITLE = Color.BLACK;
@@ -83,18 +93,32 @@ public class SimPresetPreference extends Preference {
 
     private void showPresetDialog() {
         Context context = getContext();
+        boolean darkMode = isDarkMode();
         LinearLayout dialogView = new LinearLayout(context);
         dialogView.setOrientation(LinearLayout.VERTICAL);
-        int padding = dpToPx(16);
-        dialogView.setPadding(padding, padding, padding, 0);
+        dialogView.setBackground(createDialogBackground());
+        int padding = dpToPx(18);
+        dialogView.setPadding(padding, padding, padding, padding);
+
+        TextView title = new TextView(context);
+        title.setText("SIM country preset");
+        title.setTextColor(getTitleTextColor());
+        title.setTextSize(20);
+        title.setTypeface(title.getTypeface(), android.graphics.Typeface.BOLD);
+        dialogView.addView(title, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
 
         TextView helper = new TextView(context);
         helper.setText("Choose a country preset to fill ISO, MCC/MNC, and operator name.");
         helper.setTextColor(getSummaryTextColor());
-        dialogView.addView(helper, new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams helperParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
+        );
+        helperParams.setMargins(0, dpToPx(18), 0, dpToPx(8));
+        dialogView.addView(helper, helperParams);
 
         EditText search = new EditText(context);
         search.setSingleLine(true);
@@ -107,18 +131,54 @@ public class SimPresetPreference extends Preference {
         ));
 
         ListView listView = new ListView(context);
+        listView.setBackgroundColor(Color.TRANSPARENT);
+        int listPadding = Math.max(1, dpToPx(1));
+        listView.setPadding(listPadding, listPadding, listPadding, listPadding);
+        listView.setClipToPadding(false);
+        listView.setDivider(new ColorDrawable(getDialogDividerColor()));
+        listView.setDividerHeight(Math.max(1, dpToPx(1)));
         PresetAdapter adapter = new PresetAdapter(context, visiblePresets);
         listView.setAdapter(adapter);
-        dialogView.addView(listView, new LinearLayout.LayoutParams(
+
+        FrameLayout listContainer = new FrameLayout(context);
+        listContainer.setBackground(createListBackground());
+        int containerInset = Math.max(1, dpToPx(1));
+        listContainer.setPadding(containerInset, containerInset, containerInset, containerInset);
+        LinearLayout.LayoutParams listParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 dpToPx(360)
+        );
+        listParams.setMargins(0, dpToPx(10), 0, dpToPx(12));
+        listContainer.addView(listView, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+        dialogView.addView(listContainer, listParams);
+
+        LinearLayout actions = new LinearLayout(context);
+        actions.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+        TextView cancelButton = new TextView(context);
+        cancelButton.setText(android.R.string.cancel);
+        cancelButton.setTextColor(darkMode
+                ? Color.argb(255, 255, 64, 129)
+                : Color.argb(255, 233, 30, 99));
+        cancelButton.setTextSize(16);
+        cancelButton.setTypeface(cancelButton.getTypeface(), android.graphics.Typeface.BOLD);
+        int buttonHorizontalPadding = dpToPx(12);
+        cancelButton.setPadding(buttonHorizontalPadding, dpToPx(8), buttonHorizontalPadding, dpToPx(6));
+        actions.addView(cancelButton, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        dialogView.addView(actions, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
         ));
 
         AlertDialog dialog = new AlertDialog.Builder(context)
-                .setTitle("SIM country preset")
                 .setView(dialogView)
-                .setNegativeButton(android.R.string.cancel, null)
                 .create();
+        cancelButton.setOnClickListener(view -> dialog.dismiss());
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             SimPreset preset = visiblePresets.get(position);
@@ -144,6 +204,9 @@ public class SimPresetPreference extends Preference {
 
         filterPresets("", adapter);
         dialog.show();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
     }
 
     private boolean savePreset(SimPreset preset) {
@@ -191,14 +254,52 @@ public class SimPresetPreference extends Preference {
         return Math.round(dp * getContext().getResources().getDisplayMetrics().density);
     }
 
+    private GradientDrawable createDialogBackground() {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(getDialogBackgroundColor());
+        drawable.setStroke(Math.max(1, dpToPx(1)), getDialogBorderColor());
+        drawable.setCornerRadius(dpToPx(2));
+        return drawable;
+    }
+
+    private GradientDrawable createListBackground() {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(getDialogBackgroundColor());
+        drawable.setStroke(Math.max(1, dpToPx(1)), getDialogBorderColor());
+        drawable.setCornerRadius(dpToPx(2));
+        return drawable;
+    }
+
+    private static boolean isDarkMode() {
+        return app.morphe.extension.shared.Utils.isDarkModeEnabled();
+    }
+
+    private static int getDialogBackgroundColor() {
+        return isDarkMode()
+                ? DIALOG_DARK_MODE_BACKGROUND
+                : DIALOG_LIGHT_MODE_BACKGROUND;
+    }
+
+    private static int getDialogDividerColor() {
+        return isDarkMode()
+                ? DIALOG_DARK_MODE_DIVIDER
+                : DIALOG_LIGHT_MODE_DIVIDER;
+    }
+
+    private static int getDialogBorderColor() {
+        return isDarkMode()
+                ? DIALOG_DARK_MODE_BORDER
+                : DIALOG_LIGHT_MODE_BORDER;
+    }
+
     private static int getTitleTextColor() {
-        return app.morphe.extension.shared.Utils.isDarkModeEnabled()
+        return isDarkMode()
                 ? TEXT_DARK_MODE_TITLE
                 : TEXT_LIGHT_MODE_TITLE;
     }
 
     private static int getSummaryTextColor() {
-        return app.morphe.extension.shared.Utils.isDarkModeEnabled()
+        return isDarkMode()
                 ? TEXT_DARK_MODE_SUMMARY
                 : TEXT_LIGHT_MODE_SUMMARY;
     }
@@ -226,6 +327,7 @@ public class SimPresetPreference extends Preference {
                 view.setEnabled(true);
             }
 
+            view.setBackgroundColor(getDialogBackgroundColor());
             title.setTextColor(getTitleTextColor());
             summary.setTextColor(getSummaryTextColor());
             return view;
