@@ -75,8 +75,8 @@ You can also copy this repository URL and paste it into Morphe's add source fiel
 
 ### Planned
 
-- [ ] Remove create button
-- [ ] Remove Tako AI
+- [ ] Add comments section sorting options
+
 
 <br>
 
