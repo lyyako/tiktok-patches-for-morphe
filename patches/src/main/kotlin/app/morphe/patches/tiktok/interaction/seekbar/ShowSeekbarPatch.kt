@@ -10,12 +10,12 @@ private const val EXTENSION_CLASS_DESCRIPTOR = "Lapp/morphe/extension/tiktok/see
 @Suppress("unused")
 val showSeekbarPatch = bytecodePatch(
     name = "Show seekbar",
-    description = "Shows a progress bar for all videos. (Supports Any Version)",
+    description = "Shows a progress bar for all videos. (Supports TikTok 43.8.3.)",
     default = true,
 ) {
     dependsOn(sharedExtensionPatch)
 
-    compatibleWith(*AppCompatibilities.tiktokany())
+    compatibleWith(*AppCompatibilities.tiktok4383())
 
     execute {
         val targetClass = VanillaLongFilterFingerprint.method.definingClass

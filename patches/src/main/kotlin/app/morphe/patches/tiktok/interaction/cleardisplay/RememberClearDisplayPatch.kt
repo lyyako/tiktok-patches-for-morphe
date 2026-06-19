@@ -23,7 +23,6 @@ val rememberClearDisplayPatch = bytecodePatch(
     compatibleWith(*AppCompatibilities.tiktok4383())
 
     execute {
-        // Prevent excessive logging (can cause instability on 43.8.3).
         ClearModeLogCoreFingerprint.methodOrNull?.returnEarly()
         ClearModeLogStateFingerprint.methodOrNull?.returnEarly()
         ClearModeLogPlaytimeFingerprint.methodOrNull?.returnEarly()

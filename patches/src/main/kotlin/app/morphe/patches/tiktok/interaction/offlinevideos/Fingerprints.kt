@@ -5,7 +5,7 @@ import app.morphe.patcher.Fingerprint
 internal object OfflineModeSheetOptionsFingerprint : Fingerprint(
     returnType = "V",
     custom = { method, classDef ->
-        classDef.endsWith("/OfflineModeSheetPageAssem;") &&
+        classDef.type == "Lcom/ss/android/ugc/aweme/offlinemode/ui/sheet/OfflineModeSheetPageAssem;" &&
             method.name == "<clinit>" &&
             method.parameterTypes.isEmpty()
     },
@@ -14,7 +14,7 @@ internal object OfflineModeSheetOptionsFingerprint : Fingerprint(
 internal object OfflineModeListConstructorFingerprint : Fingerprint(
     returnType = "V",
     custom = { method, classDef ->
-        classDef.endsWith("/OfflineModeListVM;") &&
+        classDef.type == "Lcom/ss/android/ugc/aweme/offlinemode/viewmodel/OfflineModeListVM;" &&
             method.name == "<init>" &&
             method.parameterTypes.isEmpty()
     },

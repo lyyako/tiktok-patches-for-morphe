@@ -37,5 +37,9 @@ internal object ShouldShowProgressBarFingerprint : Fingerprint(
 )
 
 internal object SetSeekBarShowTypeFingerprint : Fingerprint(
+    definingClass = "LX/0PHK;",
+    name = "setSeekBarShowType",
+    returnType = "V",
+    parameters = listOf("I"),
     strings = listOf("seekbar show type change, change to:"),
 )

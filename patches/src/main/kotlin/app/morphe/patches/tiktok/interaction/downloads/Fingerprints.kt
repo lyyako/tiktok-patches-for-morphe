@@ -11,21 +11,21 @@ import com.android.tools.smali.dexlib2.iface.reference.FieldReference
 import com.android.tools.smali.dexlib2.iface.reference.MethodReference
 
 internal object AclCommonShareFingerprint : Fingerprint(
-    definingClass = "/ACLCommonShare;",
+    definingClass = "Lcom/ss/android/ugc/aweme/feed/model/ACLCommonShare;",
     name = "getCode",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     returnType = "I",
 )
 
 internal object AclCommonShare2Fingerprint : Fingerprint(
-    definingClass = "/ACLCommonShare;",
+    definingClass = "Lcom/ss/android/ugc/aweme/feed/model/ACLCommonShare;",
     name = "getShowType",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     returnType = "I",
 )
 
 internal object AclCommonShare3Fingerprint : Fingerprint(
-    definingClass = "/ACLCommonShare;",
+    definingClass = "Lcom/ss/android/ugc/aweme/feed/model/ACLCommonShare;",
     name = "getTranscode",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     returnType = "I",
@@ -42,7 +42,7 @@ internal object AwemeGetVideoFingerprint : Fingerprint(
     accessFlags = listOf(AccessFlags.PUBLIC),
     returnType = "Lcom/ss/android/ugc/aweme/feed/model/Video;",
     custom = { method, classDef ->
-        classDef.endsWith("/Aweme;") &&
+        classDef.type == "Lcom/ss/android/ugc/aweme/feed/model/Aweme;" &&
             method.name == "getVideo" &&
             method.parameterTypes.isEmpty()
     },
@@ -57,13 +57,13 @@ internal object CommentImageWatermarkFingerprint : Fingerprint(
 internal object StickerPreviewBinderFingerprint : Fingerprint(
     returnType = "V",
     parameters = listOf(
-        "L",
+        "LX/05Np;",
         "Z",
         "Ljava/lang/String;",
         "Ljava/util/Map;",
     ),
     custom = { method, classDef ->
-        if (!classDef.endsWith("/05No;") || method.name != "LIZ") {
+        if (classDef.type != "LX/05No;" || method.name != "LIZ") {
             false
         } else {
             val instructions = method.implementation?.instructions

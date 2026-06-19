@@ -45,8 +45,7 @@ import app.morphe.patcher.patch.loadPatchesFromJar
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import java.io.File
-import java.net.URLClassLoader
-import java.util.jar.Manifest
+import java.util.jar.JarFile
 
 typealias PackageName = String
 typealias VersionName = String
@@ -61,24 +60,13 @@ internal fun main() {
         }!!.first()
     )
     val loadedPatches = loadPatchesFromJar(patchFiles)
-    val patchClassLoader = URLClassLoader(patchFiles.map { it.toURI().toURL() }.toTypedArray())
-    val manifest = patchClassLoader.getResources("META-INF/MANIFEST.MF")
-
-    while (manifest.hasMoreElements()) {
-        Manifest(manifest.nextElement().openStream())
-            .mainAttributes
-            .getValue("Version")
-            ?.let {
-                generatePatchList(it, loadedPatches)
-            }
+    val version = JarFile(patchFiles.single()).use { jarFile ->
+        jarFile.manifest.mainAttributes.getValue("Version")
     }
+
+    generatePatchList(version, loadedPatches)
 }
 
-/**
- * Emits `version`, root-level `appNames` (package â†’ label), and `patches` with
- * `compatiblePackages`, **`compatibility`** (full `Compatibility` metadata for Manager UI),
- * and options. Requires morphe-patcher 1.3.x and `compatibleWith(Compatibility(...))` in patches.
- */
 @Suppress("DEPRECATION")
 private fun generatePatchList(version: String, patches: Set<Patch<*>>) {
     val listJson = File("../patches-list.json")
@@ -122,12 +110,12 @@ private fun generatePatchList(version: String, patches: Set<Patch<*>>) {
         .create()
 
     val jsonObject = JsonObject()
-    jsonObject.addProperty("version", "v$version")
+    jsonObject.addProperty("version", version)
     jsonObject.add("appNames", gsonBuilder.toJsonTree(appNames))
     jsonObject.add("patches", gsonBuilder.toJsonTree(patchesMap))
 
     listJson.writeText(
-        gsonBuilder.toJson(jsonObject)
+        gsonBuilder.toJson(jsonObject) + "\n"
     )
 }
 

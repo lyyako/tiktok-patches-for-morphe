@@ -55,7 +55,7 @@ val customOfflineVideosLimitPatch = bytecodePatch(
             val capFieldWriteIndex = indexOfFirstInstructionOrThrow {
                 opcode == Opcode.IPUT &&
                     getReference<FieldReference>()?.let { field ->
-                        field.definingClass.endsWith("/OfflineModeListVM;") &&
+                        field.definingClass == "Lcom/ss/android/ugc/aweme/offlinemode/viewmodel/OfflineModeListVM;" &&
                             field.type == "I"
                     } == true
             }

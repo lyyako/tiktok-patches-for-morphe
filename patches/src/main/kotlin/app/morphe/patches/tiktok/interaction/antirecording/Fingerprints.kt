@@ -7,7 +7,7 @@ private fun antiRecordingFingerprint(marker: String) = Fingerprint(
     parameters = listOf("I"),
     strings = listOf(marker),
     custom = { method, _ ->
-        method.definingClass.endsWith("/ClearModePanelComponent;")
+        method.definingClass == "Lcom/ss/android/ugc/feed/platform/panel/clearmode/ClearModePanelComponent;"
     },
 )
 

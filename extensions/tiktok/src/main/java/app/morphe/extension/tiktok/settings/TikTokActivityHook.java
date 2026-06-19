@@ -5,22 +5,15 @@
 
 package app.morphe.extension.tiktok.settings;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import app.morphe.extension.shared.Logger;
-import app.morphe.extension.shared.Utils;
 import app.morphe.extension.tiktok.settings.preference.TikTokPreferenceFragment;
 
 import com.bytedance.ies.ugc.aweme.commercialize.compliance.personalization.AdPersonalizationActivity;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Hooks AdPersonalizationActivity to inject a custom {@link TikTokPreferenceFragment}.
@@ -28,22 +21,6 @@ import java.lang.reflect.InvocationTargetException;
 @SuppressWarnings({"deprecation", "NewApi", "unused"})
 public class TikTokActivityHook {
     private static final String SETTINGS_ACTION = "morphe_settings";
-    private static final String SETTINGS_EXTRA = "morphe";
-
-    public static Object createSettingsEntry(String entryClazzName, String entryInfoClazzName) {
-        try {
-            Class entryClazz = Class.forName(entryClazzName);
-            Class entryInfoClazz = Class.forName(entryInfoClazzName);
-            Constructor entryConstructor = entryClazz.getConstructor(entryInfoClazz);
-            Constructor entryInfoConstructor = entryInfoClazz.getDeclaredConstructors()[0];
-            Object buttonInfo = entryInfoConstructor.newInstance(
-                    "Morphe settings", null, (View.OnClickListener) view -> startSettingsActivity(), "morphe");
-            return entryConstructor.newInstance(buttonInfo);
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | IllegalAccessException |
-                 InstantiationException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     /***
      * Initialize the settings menu.
@@ -52,8 +29,7 @@ public class TikTokActivityHook {
      */
     public static boolean initialize(AdPersonalizationActivity base) {
         Intent intent = base.getIntent();
-        Bundle extras = intent.getExtras();
-        if ((extras == null || !extras.getBoolean(SETTINGS_EXTRA, false)) && !SETTINGS_ACTION.equals(intent.getAction())) {
+        if (!SETTINGS_ACTION.equals(intent.getAction())) {
             return false;
         }
 
@@ -77,19 +53,6 @@ public class TikTokActivityHook {
         base.getFragmentManager().beginTransaction().replace(fragmentId, preferenceFragment).commit();
 
         return true;
-    }
-
-    private static void startSettingsActivity() {
-        Context appContext = Utils.getContext();
-        if (appContext != null) {
-            Intent intent = new Intent(appContext, AdPersonalizationActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setAction(SETTINGS_ACTION);
-            intent.putExtra(SETTINGS_EXTRA, true);
-            appContext.startActivity(intent);
-        } else {
-            Logger.printDebug(() -> "Utils.getContext() return null");
-        }
     }
 }
 

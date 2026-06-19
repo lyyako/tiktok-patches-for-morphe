@@ -44,7 +44,6 @@ val downloadsPatch = bytecodePatch(
         AclCommonShareFingerprint.method.returnEarly(0)
         AclCommonShare2Fingerprint.method.returnEarly(2)
 
-        // Download videos without watermark.
         AclCommonShare3Fingerprint.method.addInstructionsWithLabels(
             0,
             """
@@ -70,7 +69,6 @@ val downloadsPatch = bytecodePatch(
             )
         }
 
-        // Download images without TikTok's drawn watermark.
         CommentImageWatermarkFingerprint.method.apply {
             val drawBitmapIndex = findInstructionIndicesReversedOrThrow {
                 opcode.name == "invoke-virtual" &&
@@ -104,7 +102,6 @@ val downloadsPatch = bytecodePatch(
             )
         }
 
-        // Add local gallery saving to the comment sticker/image preview sheet.
         StickerPreviewBinderFingerprint.method.apply {
             val returnIndex = findInstructionIndicesReversedOrThrow { opcode == Opcode.RETURN_VOID }.first()
             addInstructions(
@@ -115,7 +112,6 @@ val downloadsPatch = bytecodePatch(
             )
         }
 
-        // Change the download path.
         DownloadUriFingerprint.method.apply {
             findInstructionIndicesReversedOrThrow {
                 getReference<FieldReference>().let { ref ->
@@ -125,7 +121,6 @@ val downloadsPatch = bytecodePatch(
                 val pathRegister = getInstruction<OneRegisterInstruction>(fieldIndex).registerA
                 val builderRegister = getInstruction<FiveRegisterInstruction>(fieldIndex + 1).registerC
 
-                // Remove 'field load â†’ append â†’ "/Camera/" â†’ append' block.
                 removeInstructions(fieldIndex, 4)
 
                 addInstructions(

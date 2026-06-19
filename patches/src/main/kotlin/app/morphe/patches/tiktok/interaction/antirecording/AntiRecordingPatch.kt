@@ -9,10 +9,10 @@ import org.w3c.dom.Element
 @Suppress("unused")
 val antiRecordingPatch = resourcePatch(
     name = "Disable screen capture detection",
-    description = "Disables screen recording and screenshot detection. (Supports Any Version)",
+    description = "Disables screen recording and screenshot detection. (Supports TikTok 43.8.3.)",
     default = true,
 ) {
-    compatibleWith(*AppCompatibilities.tiktokany())
+    compatibleWith(*AppCompatibilities.tiktok4383())
 
     dependsOn(
         bytecodePatch {

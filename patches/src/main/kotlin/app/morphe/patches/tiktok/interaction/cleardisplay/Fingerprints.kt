@@ -9,11 +9,13 @@ import com.android.tools.smali.dexlib2.AccessFlags
 
 internal object OnClearDisplayEventFingerprint : Fingerprint(
     custom = { method, classDef ->
-        classDef.endsWith("/ClearModePanelComponent;") && method.name == "onClearModeEvent"
+        classDef.type == "Lcom/ss/android/ugc/feed/platform/panel/clearmode/ClearModePanelComponent;" &&
+            method.name == "onClearModeEvent"
     },
 )
 
 internal object ClearModeLogCoreFingerprint : Fingerprint(
+    definingClass = "LX/0QaD;",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC, AccessFlags.FINAL),
     returnType = "V",
     parameters = listOf(
@@ -28,6 +30,7 @@ internal object ClearModeLogCoreFingerprint : Fingerprint(
 )
 
 internal object ClearModeLogStateFingerprint : Fingerprint(
+    definingClass = "LX/0QaD;",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC, AccessFlags.FINAL),
     returnType = "V",
     parameters = listOf(
@@ -42,6 +45,7 @@ internal object ClearModeLogStateFingerprint : Fingerprint(
 )
 
 internal object ClearModeLogPlaytimeFingerprint : Fingerprint(
+    definingClass = "LX/0QaD;",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC),
     returnType = "V",
     parameters = listOf(

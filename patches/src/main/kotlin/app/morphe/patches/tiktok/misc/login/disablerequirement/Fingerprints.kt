@@ -8,13 +8,15 @@ import app.morphe.patcher.Fingerprint
 
 internal object MandatoryLoginServiceFingerprint : Fingerprint(
     custom = { method, classDef ->
-        classDef.endsWith("/MandatoryLoginService;") && method.name == "enableForcedLogin"
+        classDef.type == "Lcom/ss/android/ugc/aweme/services/MandatoryLoginService;" &&
+            method.name == "enableForcedLogin"
     },
 )
 
 internal object MandatoryLoginService2Fingerprint : Fingerprint(
     custom = { method, classDef ->
-        classDef.endsWith("/MandatoryLoginService;") && method.name == "shouldShowForcedLogin"
+        classDef.type == "Lcom/ss/android/ugc/aweme/services/MandatoryLoginService;" &&
+            method.name == "shouldShowForcedLogin"
     },
 )
 

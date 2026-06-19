@@ -94,7 +94,6 @@ val playbackSpeedPatch = bytecodePatch(
             """,
         )
 
-        // Kept in Morphe: supported on 43.8.3.
     }
 }
 

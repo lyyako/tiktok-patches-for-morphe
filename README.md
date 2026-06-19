@@ -33,8 +33,7 @@ The goal is to keep the existing patch set usable while adding more TikTok-focus
 
 ## Available Patches
 
-- `Settings`: Adds the Morphe settings screen inside TikTok.
-- `Enable Open Debug`: Uses TikTok's hidden Open Debug settings cell as the entry point for Morphe settings.
+- `Settings`: Adds the Morphe settings screen inside TikTok through TikTok's hidden Open Debug settings cell.
 - `Disable login requirement`: Lets supported TikTok flows load without the normal login wall first.
 - `Fix Google login`: Restores Google sign-in behavior after patching.
 - `Feed filter`: Filters feed items such as ads, livestreams, stories, shop content, image videos, and videos outside configured view or like ranges.

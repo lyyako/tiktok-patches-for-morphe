@@ -6,38 +6,22 @@ package app.morphe.patches.tiktok.misc.settings
 
 import app.morphe.patcher.Fingerprint
 
-internal object AddSettingsEntryFingerprint : Fingerprint(
-    custom = { method, classDef ->
-        classDef.endsWith("/SettingNewVersionFragment;") && method.name == "initUnitManger"
-    },
-)
-
 internal object AdPersonalizationActivityOnCreateFingerprint : Fingerprint(
     custom = { method, classDef ->
-        classDef.endsWith("/AdPersonalizationActivity;") && method.name == "onCreate"
+        classDef.type == "Lcom/bytedance/ies/ugc/aweme/commercialize/compliance/personalization/AdPersonalizationActivity;" &&
+            method.name == "onCreate"
     },
-)
-
-internal object SettingsEntryFingerprint : Fingerprint(
-    strings = listOf("pls pass item or extends the EventUnit"),
-)
-
-internal object SettingsEntryInfoFingerprint : Fingerprint(
-    strings = listOf(
-        "ExposeItem(title=",
-        ", icon=",
-    ),
 )
 
 internal object SettingsStatusLoadFingerprint : Fingerprint(
     custom = { method, classDef ->
-        classDef.endsWith("Lapp/morphe/extension/tiktok/settings/SettingsStatus;") && method.name == "load"
+        classDef.type == "Lapp/morphe/extension/tiktok/settings/SettingsStatus;" && method.name == "load"
     },
 )
 
 internal object SettingsComposeRowsFingerprint : Fingerprint(
     custom = { method, classDef ->
-        classDef.endsWith("/SettingsComposeRvmpFragment;") &&
+        classDef.type == "Lcom/ss/android/ugc/aweme/setting/ui/rvmpcompose/SettingsComposeRvmpFragment;" &&
             method.name == "XN" &&
             method.parameterTypes.size == 8
     },
@@ -45,21 +29,14 @@ internal object SettingsComposeRowsFingerprint : Fingerprint(
 
 internal object SupportGroupDefaultStateFingerprint : Fingerprint(
     custom = { method, classDef ->
-        classDef.endsWith("/SupportGroupVM;") && method.name == "defaultState"
+        classDef.type == "Lcom/ss/android/ugc/aweme/setting/ui/rvmpcompose/group/support/SupportGroupVM;" &&
+            method.name == "defaultState"
     },
 )
 
 internal object OpenDebugCellVmDefaultStateFingerprint : Fingerprint(
     custom = { method, classDef ->
-        classDef.endsWith("/OpenDebugCellVM;") && method.name == "defaultState"
+        classDef.type == "Lcom/ss/android/ugc/aweme/setting/ui/rvmpcompose/group/support/cells/OpenDebugCellVM;" &&
+            method.name == "defaultState"
     },
 )
-
-internal object OpenDebugCellClickWrapperFingerprint : Fingerprint(
-    custom = { method, classDef ->
-        classDef.endsWith("Lkotlin/jvm/internal/AwS350S0200000_2;") &&
-            method.name == "invoke\$85" &&
-            method.parameterTypes == listOf("Lkotlin/jvm/internal/AwS350S0200000_2;")
-    },
-)
-

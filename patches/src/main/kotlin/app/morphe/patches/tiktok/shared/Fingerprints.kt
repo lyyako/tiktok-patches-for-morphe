@@ -12,7 +12,7 @@ internal object GetEnterFromFingerprint : Fingerprint(
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     parameters = listOf("Z"),
     custom = { method, classDef ->
-        method.definingClass.endsWith("/BaseListFragmentPanel;") &&
+        classDef.type == "Lcom/ss/android/ugc/aweme/feed/panel/BaseListFragmentPanel;" &&
             method.returnType == "Ljava/lang/String;" &&
             method.parameterTypes.size == 1 &&
             method.parameterTypes[0] == "Z"
@@ -20,7 +20,7 @@ internal object GetEnterFromFingerprint : Fingerprint(
 )
 
 internal object OnRenderFirstFrameFingerprint : Fingerprint(
-    definingClass = "/BaseListFragmentPanel;",
+    definingClass = "Lcom/ss/android/ugc/aweme/feed/panel/BaseListFragmentPanel;",
     strings = listOf("method_enable_viewpager_preload_duration"),
 )
 

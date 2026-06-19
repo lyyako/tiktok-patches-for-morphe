@@ -10,7 +10,6 @@ import app.morphe.patcher.extensions.InstructionExtensions.addInstruction
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patches.tiktok.misc.extension.sharedExtensionPatch
 import app.morphe.patches.tiktok.misc.settings.SettingsStatusLoadFingerprint
-import app.morphe.patches.tiktok.misc.settings.SettingsStatusLoadFingerprint.method
 import com.android.tools.smali.dexlib2.Opcode
 import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
 
@@ -30,7 +29,6 @@ val feedFilterPatch = bytecodePatch(
     compatibleWith(*AppCompatibilities.tiktok4383())
 
     execute {
-        // Enables the feed filter extension after settings were loaded.
         SettingsStatusLoadFingerprint.method.addInstruction(
             0,
             "invoke-static {}, Lapp/morphe/extension/tiktok/settings/SettingsStatus;->enableFeedFilter()V",
